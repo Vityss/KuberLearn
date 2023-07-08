@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+ name: curdate
+spec:
+ schedule: "* * * * *"
+ jobTemplate:
+   spec:
+     template:
+       spec:
+         containers:
+         - name: curdate
+           image: busybox:1.28
+           command: [ 'sh', '-c',
+              'date; wget -qO- ifconfig.me' ]
+         restartPolicy: OnFailure
